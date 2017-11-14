@@ -22,11 +22,11 @@ spec:
     spec:
       containers:
       - name: hello-cloud
-        image: sebastian-daschner.com:1000/hello-cloud:1
+        image: localhost:5000/hello-cloud:1
         imagePullPolicy: Always
         livenessProbe:
           httpGet:
-            path: /hello-cloud/resources/hello
+            path: /
             port: 8080
         readinessProbe:
           httpGet:

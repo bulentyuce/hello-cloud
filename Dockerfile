@@ -1,3 +1,3 @@
-FROM sebastian-daschner.com:1000/wildfly:6
+FROM oracle/glassfish:5.0
 
-COPY target/hello-cloud.war /opt/wildfly/standalone/deployments
+COPY target/hello-cloud.war $GLASSFISH_HOME/glassfish/domains/domain1/autodeploy/
