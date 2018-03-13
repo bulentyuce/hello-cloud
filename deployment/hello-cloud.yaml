@@ -2,11 +2,14 @@ kind: Service
 apiVersion: v1
 metadata:
   name: hello-cloud
+  labels:
+    app: hello-cloud
 spec:
   selector:
     app: hello-cloud
   ports:
     - port: 8080
+      name: http
   type: NodePort
 ---
 kind: Deployment
@@ -19,19 +22,27 @@ spec:
     metadata:
       labels:
         app: hello-cloud
+        version: v1
     spec:
       containers:
       - name: hello-cloud
-        image: localhost:5000/hello-cloud:1
+        image: docker.sebastian-daschner.com/hello-cloud:1
         imagePullPolicy: Always
-        livenessProbe:
-          httpGet:
-            path: /
-            port: 8080
-        readinessProbe:
-          httpGet:
-            path: /hello-cloud/resources/hello
-            port: 8080
       imagePullSecrets:
       - name: regsecret
       restartPolicy: Always
+---
+kind: Ingress
+apiVersion: extensions/v1beta1
+metadata:
+  name: hello-cloud
+spec:
+  rules:
+    - host: kubernetes.local
+      http:
+        paths:
+        - path: /hello-cloud
+          backend:
+            serviceName: hello-cloud
+            servicePort: 8080
+---
