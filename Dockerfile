@@ -1,3 +1,3 @@
-FROM tomee:8-jre-7.0.3-plus
+FROM sdaschner/open-liberty:javaee8-jdk8-b2
 
-COPY target/hello-cloud.war /usr/local/tomee/webapps/
+COPY target/hello-cloud.war $DEPLOYMENT_DIR
